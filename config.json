@@ -1,0 +1,13 @@
+{
+  "port": 3001,
+  "maxPlayers": 20,
+  "motd": "My VoxelCraft Server",
+  "worldSeed": "my-server",
+  "pvp": true,
+  "spawnProtection": true,
+  "allowCommands": false,
+  "mods": {
+    "sharks": false,
+    "skateboard": false
+  }
+}
