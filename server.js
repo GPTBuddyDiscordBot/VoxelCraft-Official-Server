@@ -373,8 +373,6 @@ wss.on('connection', (ws, req) => {
       }
 
       case 'pos': {
-        // Client sends frequent position updates (throttled client-side to ~20Hz).
-        // We relay them so remote clients can interpolate.
         p.x = Number(msg.x) || p.x;
         p.y = Number(msg.y) || p.y;
         p.z = Number(msg.z) || p.z;
@@ -382,6 +380,8 @@ wss.on('connection', (ws, req) => {
         p.heldItemId = Number(msg.heldItemId) || 0;
         if (Array.isArray(msg.armor)) p.armor = msg.armor.slice(0, 4);
         if (msg.mcUsername !== undefined) p.mcUsername = String(msg.mcUsername).slice(0, 32);
+        p.sneaking = !!msg.sneaking;
+        p.hitting = !!msg.hitting;
         broadcast({
           type: 'player_pos',
           data: {
@@ -391,6 +391,8 @@ wss.on('connection', (ws, req) => {
             heldItemId: p.heldItemId,
             ...(msg.armor ? { armor: p.armor } : {}),
             ...(msg.mcUsername !== undefined ? { mcUsername: p.mcUsername } : {}),
+            sneaking: p.sneaking,
+            hitting: p.hitting,
           },
         }, ws);
         break;
